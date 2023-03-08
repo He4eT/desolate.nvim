@@ -333,5 +333,8 @@ return lush(function()
 		LeapLabelPrimary({ Identifier }),
 		LeapMatch({ Constant }),
 		LeapLabelSecondary({ Statement }),
+
+		-- Dirty fixes
+		typescriptParens({ NormalFloat })
 	}
 end)
