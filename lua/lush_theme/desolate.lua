@@ -334,6 +334,10 @@ return lush(function()
 		LeapMatch({ Constant }),
 		LeapLabelSecondary({ Statement }),
 
+		-- Fzf-lua
+		FzfLuaHeaderBind({ Statement }),
+		FzfLuaHeaderText({ Identifier }),
+
 		-- Dirty fixes
 		typescriptParens({ NormalFloat })
 	}
