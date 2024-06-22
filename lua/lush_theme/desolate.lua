@@ -109,12 +109,16 @@ colors.info = hsl(params.info)
 -- Highlights
 
 ---@diagnostic disable: undefined-global
-return lush(function()
+return lush(function(injected_functions)
+	local sym = injected_functions.sym
 	return {
+		-- :h treesitter-highlight
+
+		sym("@variable") { fg = colors.identifier },
+
 		-- :h highlight-gui
 
 		Normal({ fg = colors.fg, bg = colors.bg }), -- Normal text
-		-- WinSeparator({ fg = colors[8] }),
 		WinSeparator({ fg = Normal.bg[offset_fn](2) }), -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
 
 		SyntaxError({ fg = colors.error }),
@@ -122,6 +126,7 @@ return lush(function()
 		SyntaxInfo({ fg = colors.info }),
 		SyntaxHint({ fg = colors.success }),
 
+		Operator({ fg = colors.statement }),
 		Comment({ fg = colors[6] }), -- any comment
 		ColorColumn({ bg = colors[6] }), -- used for the columns set with 'colorcolumn'
 		Conceal({}), -- placeholder characters substituted for concealed text (see 'conceallevel')
@@ -147,7 +152,7 @@ return lush(function()
 		Error({ fg = colors.error }), -- (preferred) any erroneous construct
 		ErrorMsg({ fg = colors.error }), -- error messages on the command line
 		VertSplit({ fg = colors[8] }), -- the column separating vertically split windows
-		Folded({ fg = colors[9], bg = colors[3] }), -- line used for closed folds
+		Folded({ fg = colors[3], bg = colors[3] }), -- line used for closed folds
 		FoldColumn({}), -- 'foldcolumn'
 		SignColumn({}), -- column where |signs| are displayed
 		IncSearch({ fg = colors.bg, bg = colors.identifier }), -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
@@ -267,59 +272,6 @@ return lush(function()
 		DiagnosticSignWarning({ fg = colors.warning }), -- Used for "Warning" signs in sign column
 		DiagnosticSignInformation({ fg = colors.info }), -- Used for "Information" signs in sign column
 		DiagnosticSignHint({ fg = colors.success }), -- Used for "Hint" signs in sign column
-
-		-- Treesitter
-
-		-- TSAnnotation({}), -- For C++/Dart attributes, annotations that can be attached to the code to denote some kind of meta information.
-		-- TSAttribute({}), -- (unstable) TODO: docs
-		-- TSBoolean({}), -- For booleans.
-		-- TSCharacter({}), -- For characters.
-		-- TSComment({}), -- For comment blocks.
-		-- TSConstructor({}), -- For constructor calls and definitions: ` { }` in Lua, and Java constructors.
-		-- TSConditional({}), -- For keywords related to conditionnals.
-		-- TSConstant({}), -- For constants
-		-- TSConstBuiltin({}), -- For constant that are built in the language: `nil` in Lua.
-		-- TSConstMacro({}), -- For constants that are defined by macros: `NULL` in C.
-		-- TSError({}), -- For syntax/parser errors.
-		-- TSException({}), -- For exception related keywords.
-		-- TSField({}), -- For fields.
-		-- TSFloat({}), -- For floats.
-		-- TSFunction({}), -- For function (calls and definitions).
-		-- TSFuncBuiltin({}), -- For builtin functions: `table.insert` in Lua.
-		-- TSFuncMacro({}), -- For macro defined fuctions (calls and definitions): each `macro_rules` in Rust.
-		-- TSInclude({}), -- For includes: `#include` in C, `use` or `extern crate` in Rust, or `require` in Lua.
-		-- TSKeyword({}), -- For keywords that don't fall in previous categories.
-		-- TSKeywordFunction({}), -- For keywords used to define a fuction.
-		-- TSLabel({}), -- For labels: `label:` in C and `:label:` in Lua.
-		-- TSMethod({}), -- For method calls and definitions.
-		-- TSNamespace({}), -- For identifiers referring to modules and namespaces.
-		-- TSNone({}), -- TODO: docs
-		-- TSNumber({}), -- For all numbers
-		-- TSOperator({}), -- For any operator: `+`, but also `->` and `*` in C.
-		-- TSParameter({}), -- For parameters of a function.
-		-- TSParameterReference({}), -- For references to parameters of a function.
-		TSProperty({}), -- Same as `TSField`.
-		-- TSPunctDelimiter({}), -- For delimiters ie: `.`
-		-- TSPunctBracket({}), -- For brackets and parens.
-		-- TSPunctSpecial({}), -- For special punctutation that does not fall in the catagories before.
-		-- TSRepeat({}), -- For keywords related to loops.
-		-- TSString({}), -- For strings.
-		TSStringRegex({ fg = colors[1] }), -- For regexes.
-		TSStringEscape({ fg = colors.fg, gui = "bold" }), -- For escape characters within a string.
-		-- TSSymbol({}), -- For identifiers referring to symbols or atoms.
-		-- TSType({}), -- For types.
-		-- TSTypeBuiltin({}), -- For builtin types.
-		-- TSVariable({}), -- Any variable name that does not have another highlight.
-		-- TSVariableBuiltin({}), -- Variable names that are defined by the languages, like `this` or `self`.
-		-- TSTag({}), -- Tags like html tag names.
-		-- TSTagDelimiter({}), -- Tag delimiter like `<` `>` `/`
-		-- TSText({}), -- For strings considered text in a markup language.
-		-- TSEmphasis({}), -- For text to be represented with emphasis.
-		-- TSUnderline({}), -- For text to be represented with an underline.
-		-- TSStrike({}), -- For strikethrough text.
-		-- TSTitle({}), -- Text that is part of a title.
-		-- TSLiteral({}), -- Literal text.
-		-- TSURI({}), -- Any URI like a link or email.
 
 		IndentBlankLineContextStart({ gui = "underline", sp = colors.nt }),
 		TreesitterContext({ fg = colors[3] }),
