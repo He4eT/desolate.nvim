@@ -111,7 +111,11 @@ colors.info = hsl(params.info)
 ---@diagnostic disable: undefined-global
 return lush(function()
 	return {
+		-- :h highlight-gui
+
 		Normal({ fg = colors.fg, bg = colors.bg }), -- Normal text
+		-- WinSeparator({ fg = colors[8] }),
+		WinSeparator({ fg = Normal.bg[offset_fn](2) }), -- Screen-line at the cursor, when 'cursorline' is set.  Low-priority if foreground (ctermfg OR guifg) is not set.
 
 		SyntaxError({ fg = colors.error }),
 		SyntaxWarning({ fg = colors.warning }),
@@ -137,10 +141,13 @@ return lush(function()
 		-- EndOfBuffer({}), -- filler lines (~) after the end of the buffer.  By default, this is highlighted like |hl-NonText|.
 		-- TermCursor({}), -- cursor in a focused terminal
 		-- TermCursorNC({}), -- cursor in an unfocused terminal
+		Added({ fg = colors.success }),
+		Changed({ fg = colors.warning }),
+		Removed({ fg = colors.error }),
 		Error({ fg = colors.error }), -- (preferred) any erroneous construct
 		ErrorMsg({ fg = colors.error }), -- error messages on the command line
 		VertSplit({ fg = colors[8] }), -- the column separating vertically split windows
-		Folded({ fg = colors[3], bg = colors[9] }), -- line used for closed folds
+		Folded({ fg = colors[9], bg = colors[3] }), -- line used for closed folds
 		FoldColumn({}), -- 'foldcolumn'
 		SignColumn({}), -- column where |signs| are displayed
 		IncSearch({ fg = colors.bg, bg = colors.identifier }), -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
@@ -164,6 +171,7 @@ return lush(function()
 		Question({}), -- |hit-enter| prompt and yes/no questions
 		QuickFixLine({}), -- Current |quickfix| item in the quickfix window. Combined with |hl-CursorLine| when the cursor is there.
 		Search({ fg = colors.bg, bg = colors.identifier }), -- Last search pattern highlighting (see 'hlsearch').  Also used for similar items that need to stand out.
+		CurSearch({ fg = colors.bg, bg = colors.constant }), -- Search pattern under the cursor
 		SpecialKey({ gui = "bold" }), -- Unprintable characters: text displayed differently from what it really is.  But not 'listchars' whitespace. |hl-Whitespace|
 		SpellBad({ SyntaxError }), -- Word that is not recognized by the spellchecker. |spell| Combined with the highlighting used otherwise.
 		SpellCap({ SyntaxInfo }), -- Word that should start with a capital. |spell| Combined with the highlighting used otherwise.
@@ -182,15 +190,17 @@ return lush(function()
 		Whitespace({ fg = colors[7] }), -- "nbsp", "space", "tab" and "trail" in 'listchars'
 		WildMenu({ fg = colors[6], bg = colors.fg }), -- current match in 'wildmenu' completion
 
+		-- :h group-name
+
 		Constant({ fg = colors.constant }), -- (preferred) any constant
-		-- String({}), -- a string constant: "this is a string"
-		-- Character({}), -- a character constant: 'c', '\n'
-		-- Number({}), -- a number constant: 234, 0xff
-		-- Boolean({}), -- a boolean constant: TRUE, false
-		-- Float({}), -- a floating point constant: 2.3e10
+		String({ Constant }), -- a string constant: "this is a string"
+		-- Character({ Constant }), -- a character constant: 'c', '\n'
+		-- Number({ Constant }), -- a number constant: 234, 0xff
+		-- Boolean({ Constant }), -- a boolean constant: TRUE, false
+		-- Float({ Constant }), -- a floating point constant: 2.3e10
 
 		Identifier({ fg = colors.identifier }), -- (preferred) any variable name
-		-- Function({}), -- function name (also: methods for classes)
+		Function({ Identifier }), -- function name (also: methods for classes)
 
 		Statement({ fg = colors.statement }), -- (preferred) any statement
 		-- Conditional({}), -- if, then, else, endif, switch, etc.
