@@ -152,7 +152,7 @@ return lush(function(injected_functions)
 		Error({ fg = colors.error }), -- (preferred) any erroneous construct
 		ErrorMsg({ fg = colors.error }), -- error messages on the command line
 		VertSplit({ fg = colors[8] }), -- the column separating vertically split windows
-		Folded({ fg = colors[3], bg = colors[3] }), -- line used for closed folds
+		Folded({ fg = colors[3], bg = colors[7] }), -- line used for closed folds
 		FoldColumn({}), -- 'foldcolumn'
 		SignColumn({}), -- column where |signs| are displayed
 		IncSearch({ fg = colors.bg, bg = colors.identifier }), -- 'incsearch' highlighting; also used for the text replaced with ":s///c"
