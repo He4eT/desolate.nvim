@@ -292,6 +292,7 @@ return lush(function(injected_functions)
 
 		-- Leap
 		LeapBackdrop({ Comment }),
+		LeapLabel({ Identifier }),
 		LeapLabelPrimary({ Identifier }),
 		LeapMatch({ Constant }),
 		LeapLabelSecondary({ Statement }),
