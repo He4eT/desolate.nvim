@@ -302,6 +302,6 @@ return lush(function(injected_functions)
 		FzfLuaHeaderText({ Statement }),
 
 		-- Dirty fixes
-		typescriptParens({ NormalFloat })
+		typescriptParens({ fg = colors.fg })
 	}
 end)
